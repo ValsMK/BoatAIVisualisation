@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class State : MonoBehaviour
+public class State
 {
     public StrengthVector DistanceToEndPosition { get; set; }
 
@@ -62,7 +62,7 @@ public class StrengthVector : IEquatable<StrengthVector>
     {
         return $"({Strength}, {Angle})";
     }
-    public bool Equals(StrengthVector? other)
+    public bool Equals(StrengthVector other)
     {
         if (other is null)
             return false;
@@ -105,7 +105,7 @@ public class Obstacles : IEquatable<Obstacles>
         return $"({_obstacles.GetValue(0, 0)}, {_obstacles.GetValue(0, 1)}, {_obstacles.GetValue(0, 2)}, {_obstacles.GetValue(1, 0)}, {_obstacles.GetValue(1, 1)}, {_obstacles.GetValue(1, 2)}, {_obstacles.GetValue(2, 0)}, {_obstacles.GetValue(2, 1)}, {_obstacles.GetValue(2, 2)})";
     }
 
-    public bool Equals(Obstacles? other)
+    public bool Equals(Obstacles other)
     {
         if (other is null)
             return false;
