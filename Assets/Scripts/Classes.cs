@@ -12,7 +12,7 @@ public class State
 
     public Obstacles Obstacles { get; set; }
 
-    public int Hash => GetHash();
+    public int Hash => GetStableHash();
 
     public override string ToString()
     {
@@ -38,6 +38,31 @@ public class State
                 hash = HashCode.Combine(Obstacles.GetValue(x, y), hash);
             }
         }
+        return hash;
+    }
+
+    private int GetStableHash()
+    {
+        const int FNV_OFFSET_BASIS = unchecked((int)2166136261);
+        const int FNV_PRIME = 16777619;
+
+        int hash = FNV_OFFSET_BASIS;
+
+        // Добавляем в хэш числовые значения
+        hash = (hash ^ DistanceToEndPosition.Strength.GetHashCode()) * FNV_PRIME;
+        hash = (hash ^ DistanceToEndPosition.Angle.GetHashCode()) * FNV_PRIME;
+        hash = (hash ^ CurrentFlow.Strength.GetHashCode()) * FNV_PRIME;
+        hash = (hash ^ CurrentFlow.Angle.GetHashCode()) * FNV_PRIME;
+
+        // Добавляем в хэш данные из массива препятствий
+        for (int x = 0; x < Obstacles.Len; x++)
+        {
+            for (int y = 0; y < Obstacles.Len; y++)
+            {
+                hash = (hash ^ Obstacles.GetValue(x, y).GetHashCode()) * FNV_PRIME;
+            }
+        }
+
         return hash;
     }
 }

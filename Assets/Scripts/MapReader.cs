@@ -91,8 +91,10 @@ public static class MapReader
             {
                 UnityEngine.Color pixelColor = texture.GetPixel(x, y);
                 var flowTuple = ColorToTuple(pixelColor, colorMap);
-                var yNew = texture.height - 1 - y;
-                flows.SetFLow(x, yNew, flowTuple);
+                
+                //var yNew = texture.height - 1 - y;
+                //flows.SetFLow(x, yNew, flowTuple);
+                flows.SetFLow(x, y, flowTuple);
             }
 
         return flows;
